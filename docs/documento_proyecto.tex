@@ -1,0 +1,168 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=3cm]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+% ── Formato de secciones ──────────────────────────────────────────
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+
+% ─────────────────────────────────────────────────────────────────
+\begin{document}
+
+% ── PORTADA ───────────────────────────────────────────────────────
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    % Logo de la universidad (cuadrado)
+    \includegraphics[width=4cm, height=4cm, keepaspectratio]{assets/logo-lasalle.png} \\[0.8cm]
+
+    {\Large\bfseries Universidad La Salle\\[0.3cm]}
+    {\normalsize Arequipa, Perú\\[0.2cm]}
+    {\normalsize Escuela Profesional de Ingeniería de Software\\}
+
+    \vspace{1.5cm}
+    \rule{\linewidth}{1.5pt}\\[0.4cm]
+
+    {\LARGE\bfseries EventTix: Sistema de Gestión\\[0.3cm]
+    de Entradas Inteligentes (QR)\\}
+
+    \vspace{0.4cm}
+    {\normalsize\itshape Avance de Proyecto -- Fase 1 (Maqueta UI)}\\
+
+    \rule{\linewidth}{1.5pt}
+    \vspace{1.5cm}
+
+    \begin{tabular}{ll}
+        \textbf{Integrante:} & Roger Infa Sanchez \\
+        \textbf{DNI:}        & 72190044 \\
+        \textbf{Correo:}     & rinfas@ulasalle.edu.pe \\[0.5cm]
+        \textbf{Curso:}      & Programación para Dispositivos Móviles \\
+        \textbf{Ciclo:}      & 2026-1 \\
+        \textbf{Entrega:}    & Junio 2026 \\
+    \end{tabular}
+
+    \vfill
+    {\small Repositorio: \url{https://github.com/rogerinfas/EventTix-Flutter}}
+\end{titlepage}
+
+% ─────────────────────────────────────────────────────────────────
+\section{Descripción del Proyecto}
+
+\subsection{Contexto y Problemática}
+
+En la actualidad, la asistencia a eventos culturales, deportivos y de
+entretenimiento sigue dependiendo de boletos físicos impresos. Este
+modelo presenta inconvenientes como pérdida del boleto, dificultad
+para transferirlo y procesos de cancelación lentos.
+
+\textbf{EventTix} propone reemplazar el boleto físico por un
+\textit{Smart Ticket} digital con código QR, accesible desde cualquier
+dispositivo Android, eliminando la necesidad de impresión y mejorando
+la seguridad en el control de acceso.
+
+\subsection{Objetivo General}
+
+Desarrollar una aplicación móvil en Flutter que permita a los usuarios
+explorar eventos, gestionar sus boletos digitales y acceder a ellos
+mediante códigos QR únicos.
+
+\subsection{Objetivos Específicos}
+
+\begin{itemize}[noitemsep]
+    \item Diseñar una cartelera de eventos interactiva con datos estáticos (Fase 1) y REST API (Fase 2).
+    \item Implementar una billetera digital que centralice todos los boletos del usuario.
+    \item Generar códigos QR únicos para cada boleto usando la librería \texttt{qr\_flutter}.
+    \item Permitir la transferencia y cancelación de boletos desde la aplicación.
+\end{itemize}
+
+% ─────────────────────────────────────────────────────────────────
+\section{Funcionalidades Principales}
+
+\subsection{Pantalla 1 -- Cartelera de Eventos}
+
+Lista de próximos eventos con tarjetas visuales. Cada tarjeta muestra
+nombre, lugar, fecha, categoría y precio. En esta fase los datos son
+estáticos (\textit{mock data}); en Fase 2 se conectará a una API REST.
+
+\begin{itemize}[noitemsep]
+    \item Vista en lista con \texttt{ListView.builder}.
+    \item Categorías: Música, Comedia, Danza, Electrónica.
+    \item Indicador de precio por entrada.
+\end{itemize}
+
+\subsection{Pantalla 2 -- Billetera de Entradas}
+
+Sección personal que centraliza todos los boletos del usuario,
+diferenciando visualmente los \textbf{Activos} de los
+\textbf{Cancelados}. Toca un boleto activo para ver su código QR.
+
+\begin{itemize}[noitemsep]
+    \item Lista con nombre del evento, asiento y fecha.
+    \item Indicador de estado: ACTIVO / CANCELADO.
+    \item Navegación directa al detalle del boleto.
+\end{itemize}
+
+\subsection{Pantalla 3 -- Smart Ticket (Código QR)}
+
+Pantalla central de la aplicación. Muestra la información del boleto
+y genera un código QR real a partir del ID del boleto, evento, asiento
+y fecha.
+
+\begin{itemize}[noitemsep]
+    \item QR generado con \texttt{qr\_flutter \^{}4.1.0}.
+    \item Diseño tipo boleto con separador troquelado.
+    \item Botones \textbf{Transferir} y \textbf{Cancelar} (Fase 2 -- backend).
+\end{itemize}
+
+% ─────────────────────────────────────────────────────────────────
+\section{Arquitectura y Tecnologías}
+
+\begin{center}
+\begin{tabular}{>{\bfseries}l l l}
+    \toprule
+    Componente        & Tecnología              & Propósito \\
+    \midrule
+    Frontend Móvil    & Flutter 3.x (Dart)      & UI Android / iOS \\
+    Generación de QR  & qr\_flutter \^{}4.1.0   & Códigos QR en pantalla \\
+    Navegación        & NavigationBar           & Rutas entre pantallas \\
+    Estado (Fase 1)   & MVVM (Model-View-ViewModel) & Datos mock estructurados \\
+    Backend (Fase 2)  & REST API (por definir)  & Gestión real de boletos \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+% ─────────────────────────────────────────────────────────────────
+\section{Estado Actual del Avance}
+
+En esta primera fase se entrega la maqueta de la interfaz de usuario
+con arquitectura \textbf{MVVM} y datos estáticos. Las tres pantallas
+son navegables de manera limpia y el código QR se genera de forma real.
+
+\begin{itemize}[noitemsep]
+    \item[$\checkmark$] Arquitectura base estructurada en \textbf{MVVM}
+    \item[$\checkmark$] Pantalla 1: Cartelera de Eventos (datos mock)
+    \item[$\checkmark$] Pantalla 2: Billetera de Entradas (datos mock)
+    \item[$\checkmark$] Pantalla 3: Detalle con Código QR funcional
+    \item[$\checkmark$] Navegación con \texttt{NavigationBar}
+    \item[$\circ$] Transferir boleto (Fase 2 -- backend)
+    \item[$\circ$] Cancelar boleto (Fase 2 -- backend)
+    \item[$\circ$] Autenticación de usuario (Fase 2 -- backend)
+\end{itemize}
+
+\end{document}
