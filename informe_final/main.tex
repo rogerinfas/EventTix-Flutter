@@ -4,6 +4,7 @@
 \usepackage[spanish]{babel}
 \usepackage{geometry}
 \usepackage{graphicx}
+\usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{amsmath}
@@ -17,11 +18,15 @@
     right=2.5cm
 }
 
+% Colores institucionales de La Salle
+\definecolor{LaSalleBlue}{HTML}{1A54A8}
+\definecolor{LaSalleDarkBlue}{HTML}{0D2E5C}
+
 \hypersetup{
     colorlinks=true,
-    linkcolor=blue,
+    linkcolor=LaSalleBlue,
     filecolor=magenta,      
-    urlcolor=cyan,
+    urlcolor=LaSalleBlue,
     pdftitle={EventTix Final Report},
     pdfpagemode=FullScreen,
 }
