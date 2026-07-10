@@ -27,7 +27,9 @@ migrate_working_dir/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
+.packages
 .pub-cache/
 .pub/
 /build/
@@ -39,10 +41,34 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# Android-related
+**/android/local.properties
+**/android/[a-zA-Z]*/local.properties
+**/android/.gradle
+**/android/**/GeneratedPluginRegistrant.java
+
+# iOS/macOS-related
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/GeneratedPluginRegistrant.h
+**/ios/Flutter/GeneratedPluginRegistrant.m
+**/ios/Flutter/ephemeral/
+**/macos/Flutter/ephemeral/
+
+# Linux-related
+**/linux/flutter/ephemeral/
+
+# Windows-related
+**/windows/flutter/ephemeral/
+
+# Environment / Secret files
+.env*
+*.env
+*.keystore
+*.jks
 
 # LATEX
 *.aux
