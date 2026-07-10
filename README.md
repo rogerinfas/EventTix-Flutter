@@ -20,13 +20,25 @@ Este cliente móvil consume directamente los servicios expuestos por la API REST
 La aplicación móvil está configurada para consumir los endpoints de la API desplegada en:
 *   **Base URL**: `http://77.42.83.15:9988/api`
 
+### 🔑 Usuarios de Prueba (Seed Users)
+Para facilitar las pruebas de la aplicación, el backend cuenta con dos usuarios pre-cargados que puedes utilizar inmediatamente para iniciar sesión:
+
+*   **Usuario Administrador / Principal:**
+    *   **Email:** `admin@eventtix.com`
+    *   **Contraseña:** `admin123`
+*   **Usuario Secundario (Ideal para pruebas de transferencia P2P):**
+    *   **Email:** `user@eventtix.com`
+    *   **Contraseña:** `user123`
+
 ### Endpoints Consumidos
 1.  `POST /api/register` — Permite el autoregistro de usuarios.
 2.  `POST /api/login` — Autentica al usuario devolviendo el JWT.
 3.  `GET /api/perfil` — Carga dinámicamente los datos del usuario autenticado.
 4.  `GET /api/eventos` — Lista todos los eventos disponibles con sus respectivos detalles y colores de categoría.
 5.  `GET /api/billetera` — Carga en tiempo real los boletos asociados al usuario autenticado.
-6.  `POST /api/billetera/comprar` — Realiza la adquisición de un boleto (disponible a través de endpoints futuros).
+6.  `POST /api/billetera/comprar` — Realiza la adquisición de un boleto.
+7.  `PATCH /api/billetera/<boleto_id>/cancelar` — Cancela un boleto activo y libera el asiento.
+8.  `POST /api/billetera/transferir` — Transfiere un boleto a otro usuario por correo electrónico.
 
 ---
 
