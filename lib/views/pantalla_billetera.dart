@@ -5,31 +5,110 @@ import 'pantalla_detalle_boleto.dart';
 
 /// [PantallaBilletera] representa la sección donde el usuario puede visualizar
 /// sus boletos comprados (tanto activos como inactivos/utilizados).
-class PantallaBilletera extends StatelessWidget {
+class PantallaBilletera extends StatefulWidget {
   const PantallaBilletera({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Instanciamos el ViewModel para obtener la lista de boletos y contadores.
-    final viewModel = BilleteraViewModel();
-    final boletos = viewModel.boletos;
+  State<PantallaBilletera> createState() => _PantallaBilleteraState();
+}
 
+class _PantallaBilleteraState extends State<PantallaBilletera> {
+  final _viewModel = BilleteraViewModel();
+
+  /// Acción asíncrona de recarga al deslizar hacia abajo (Pull to Refresh).
+  Future<void> _refrescarBilletera() async {
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     const cFondo = Color(0xFF0F0F1A);
 
-    return Scaffold(
-      backgroundColor: cFondo,
-      // Helper method: Extrae el AppBar para mantener la legibilidad de la vista principal.
-      appBar: _buildAppBar(viewModel),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: boletos.length,
-        itemBuilder: (context, i) => _TarjetaBoleto(boleto: boletos[i]),
-      ),
+    return FutureBuilder<List<Boleto>>(
+      future: _viewModel.cargarBilletera(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            backgroundColor: cFondo,
+            body: Center(
+              child: CircularProgressIndicator(color: Color(0xFF6C3AE8)),
+            ),
+          );
+        }
+
+        if (snapshot.hasError) {
+          return Scaffold(
+            backgroundColor: cFondo,
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Error al cargar la billetera.\nPor favor, intenta de nuevo.',
+                    style: TextStyle(color: Colors.white70),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () => setState(() {}),
+                    style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF6C3AE8)),
+                    child: const Text('Reintentar', style: TextStyle(color: Colors.white)),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        final boletosRaw = snapshot.data ?? [];
+        // Ordena: primero los activos, luego el resto (cancelados/usados)
+        final boletos = [...boletosRaw]
+          ..sort((a, b) {
+            final aActivo = a.estado == 'activo' ? 0 : 1;
+            final bActivo = b.estado == 'activo' ? 0 : 1;
+            return aActivo.compareTo(bActivo);
+          });
+        final totalActivos = boletos.where((b) => b.estado == 'activo').length;
+
+        return Scaffold(
+          backgroundColor: cFondo,
+          // Helper method: Extrae el AppBar para mantener la legibilidad de la vista principal.
+          appBar: _buildAppBar(totalActivos),
+          body: RefreshIndicator(
+            color: const Color(0xFF6C3AE8),
+            backgroundColor: const Color(0xFF1A1A2E),
+            onRefresh: _refrescarBilletera,
+            child: boletos.isEmpty
+                ? const Center(
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 100),
+                        child: Text(
+                          'No tienes boletos registrados.\n¡Adquiere uno en la cartelera!',
+                          style: TextStyle(color: Colors.white70),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: boletos.length,
+                    itemBuilder: (context, i) => _TarjetaBoleto(
+                      boleto: boletos[i],
+                      onRefreshNeeded: _refrescarBilletera,
+                    ),
+                  ),
+          ),
+        );
+      },
     );
+
   }
 
   /// Construye la barra superior con el conteo de boletos activos.
-  PreferredSizeWidget _buildAppBar(BilleteraViewModel viewModel) {
+  PreferredSizeWidget _buildAppBar(int totalActivos) {
     const cSuperficie = Color(0xFF1A1A2E);
     const cPrimario = Color(0xFF6C3AE8);
 
@@ -44,7 +123,7 @@ class PantallaBilletera extends StatelessWidget {
           padding: const EdgeInsets.only(right: 16),
           child: Chip(
             label: Text(
-              '${viewModel.totalActivos} Activos',
+              '$totalActivos Activos',
               style: const TextStyle(color: Colors.white, fontSize: 11),
             ),
             backgroundColor: cPrimario,
@@ -60,7 +139,8 @@ class PantallaBilletera extends StatelessWidget {
 /// Permite navegación al detalle si el boleto se encuentra en estado 'activo'.
 class _TarjetaBoleto extends StatelessWidget {
   final Boleto boleto;
-  const _TarjetaBoleto({required this.boleto});
+  final VoidCallback onRefreshNeeded;
+  const _TarjetaBoleto({required this.boleto, required this.onRefreshNeeded});
 
   // Getter auxiliar para validar si el boleto está disponible para su uso.
   bool get _activo => boleto.estado == 'activo';
@@ -100,13 +180,17 @@ class _TarjetaBoleto extends StatelessWidget {
   }
 
   /// Navega a la pantalla del detalle del boleto.
-  void _irAlDetalle(BuildContext context) {
-    Navigator.push(
+  Future<void> _irAlDetalle(BuildContext context) async {
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => PantallaDetalleBoleto(boleto: boleto),
       ),
     );
+    // Si se realizó alguna acción (cancelar o transferir) que devuelva true, refrescamos.
+    if (result == true) {
+      onRefreshNeeded();
+    }
   }
 
   /// Construye el indicador visual (círculo con icono) según el estado del boleto.
