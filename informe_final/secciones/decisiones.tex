@@ -1,0 +1,15 @@
+\section{Decisiones de Diseño y Aprendizajes}
+
+\subsection{Decisiones de Diseño Clave}
+\begin{itemize}
+    \item \textbf{Eliminación de IndexedStack por Ciclo de Vida:} 
+    Inicialmente, la navegación de pestañas utilizaba \texttt{IndexedStack}, lo que congelaba los sub-widgets en memoria y no llamaba a la API cuando el usuario regresaba de comprar un boleto. Se decidió rediseñar el control de vistas a través de un \texttt{switch/case} dinámico con un \texttt{ValueKey} para forzar la reconstrucción limpia de la pantalla activa.
+    \item \textbf{Procesamiento de Errores P2P en el Cliente:} 
+    Al transferir un boleto, en lugar de manejar una validación estática local, la aplicación delega la validación de correos electrónicos al servidor REST. Si el destinatario no está registrado, el frontend captura el error HTTP 404 del backend y lo renderiza de forma elegante en el modal de transferencia.
+\end{itemize}
+
+\subsection{Aprendizajes}
+\begin{itemize}
+    \item \textbf{Gestión de Estado Asíncrono:} El uso correcto de \texttt{FutureBuilder} en conjunto con recargadores asíncronos (\texttt{RefreshIndicator}) permite crear una experiencia mucho más reactiva y de alta fidelidad táctil.
+    \item \textbf{Estandarización del Historial de Cambios:} Implementar \textit{Conventional Commits} en el control de versiones facilitó a los desarrolladores comprender qué cambios corregían fallos de regresión y qué cambios agregaban nuevas funcionalidades al backend o frontend.
+\end{itemize}

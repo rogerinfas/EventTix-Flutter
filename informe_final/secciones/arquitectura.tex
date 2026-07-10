@@ -1,0 +1,16 @@
+\section{Arquitectura del Sistema y Patrón de Diseño}
+
+\subsection{Patrón de Diseño MVVM (Model-View-ViewModel)}
+El desarrollo de la aplicación de Flutter se estructuró siguiendo el patrón arquitectónico \textbf{MVVM}, garantizando modularidad, desacoplamiento y facilidad de testing:
+
+\begin{itemize}
+    \item \textbf{Model (Modelos):} Clases Dart independientes como \texttt{Evento} y \texttt{Boleto} que procesan la deserialización del formato JSON enviado por la API.
+    \item \textbf{View (Vistas):} Componentes declarativos de UI (ej. \texttt{PantallaBilletera}) estilizados bajo una paleta oscura y estructurados en widgets pequeños y reutilizables.
+    \item \textbf{ViewModel (Modelos de Vista):} Controladores intermedios como \texttt{EventosViewModel} y \texttt{BilleteraViewModel} que exponen los flujos de datos asíncronos y mantienen el estado de la UI limpio.
+\end{itemize}
+
+\subsection{Capa de Servicio de Red}
+Se implementó un cliente centralizado en la clase \texttt{ApiService} que gestiona las peticiones HTTP seguras. Esta clase inyecta automáticamente el token de autorización JWT guardado en el almacenamiento seguro de la app móvil.
+
+\subsection{Estructura del Backend}
+El backend está programado en Python utilizando el microframework Flask y persistiendo los datos en una base de datos relacional SQLite ligera. Los endpoints están desplegados bajo una dirección IP dedicada (\texttt{http://77.42.83.15:9988}), permitiendo a la app móvil consultar el catálogo de eventos y realizar las operaciones seguras de billetera.

@@ -1,0 +1,60 @@
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fancyhdr}
+
+\geometry{
+    top=3cm,
+    bottom=3cm,
+    left=2.5cm,
+    right=2.5cm
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={EventTix Final Report},
+    pdfpagemode=FullScreen,
+}
+
+% Encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{EventTix - Proyecto Final}
+\lhead{Dispositivos Móviles}
+\rfoot{Página \thepage}
+
+\begin{document}
+
+% Incluir portada
+\input{portada.tex}
+
+\newpage
+\tableofcontents
+\newpage
+
+% Incluir secciones modulares
+\input{secciones/introduccion.tex}
+\newpage
+
+\input{secciones/caracteristicas.tex}
+\newpage
+
+\input{secciones/arquitectura.tex}
+\newpage
+
+\input{secciones/decisiones.tex}
+\newpage
+
+\input{secciones/rubrica.tex}
+
+\end{document}
