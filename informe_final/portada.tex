@@ -1,28 +1,44 @@
 \begin{titlepage}
     \centering
-    \vspace*{0.2cm}
+    \vspace*{-1cm} % Ajuste para iniciar el encabezado cerca del borde superior
+
+    % Encabezado Institucional (Diseño de tres columnas con recuadro de nota)
+    \noindent
+    \begin{tabular}{m{3.5cm} c m{2.5cm}}
+        \includegraphics[width=3.5cm]{logo-lasalle.png} &
+        \begin{tabular}{c}
+            \fontsize{9pt}{11pt}\selectfont \textbf{FACULTAD DE INGENIERÍA Y ARQUITECTURA} \\
+            \fontsize{8pt}{10pt}\selectfont \textbf{CARRERA PROFESIONAL DE INGENIERÍA DE SOFTWARE}
+        \end{tabular} &
+        \centering
+        \begin{tabular}{|c|}
+            \hline
+            \rule{0pt}{1.2cm} \hspace{1.5cm} \\
+            \hline
+            \fontsize{8pt}{10pt}\selectfont \textbf{NOTA} \\
+        \end{tabular}
+    \end{tabular} \\
     
-    % Logo de la Universidad
-    \includegraphics[width=0.3\textwidth]{logo-lasalle.png} \\
-    \vspace{0.4cm}
+    \vspace{0.2cm}
     
-    % Línea decorativa superior en color azul institucional
-    {\color{LaSalleBlue}\hrule height 2pt}
-    \vspace{0.3cm}
+    % Barra de color institucional con texto blanco
+    \noindent
+    \colorbox{LaSalleBlue}{%
+        \makebox[\textwidth][c]{\color{white}\bfseries\fontsize{11pt}{13pt}\selectfont PROYECTO FINAL}%
+    }
+    
+    \vspace{1.8cm}
     
     % Título del proyecto
     {\Huge \textbf{\color{LaSalleDarkBlue} EventTix}} \\
-    \vspace{0.2cm}
+    \vspace{0.4cm}
     {\large \textbf{\color{LaSalleBlue} Plataforma Móvil de Venta y Gestión de Boletos Inteligentes}} \\
-    \vspace{0.3cm}
     
-    % Línea decorativa inferior
-    {\color{LaSalleBlue}\hrule height 1pt}
-    \vspace{0.6cm}
+    \vspace{1.8cm}
     
     % Detalle del trabajo
     {\Large \textbf{Informe Final de Proyecto}} \\
-    \vspace{0.5cm}
+    \vspace{1cm}
     
     % Información del Curso e Integrantes
     \begin{minipage}{0.85\textwidth}
@@ -30,22 +46,22 @@
         \small
         \textbf{Curso:} \\
         Desarrollo de Aplicaciones para Dispositivos Móviles \\
-        \vspace{0.4cm}
+        \vspace{0.6cm}
         
         \textbf{Integrante:} \\
         Roger Infante Asalde \\
-        \vspace{0.4cm}
+        \vspace{0.6cm}
         
         \textbf{Entregables del Proyecto:} \\
-        \vspace{0.2cm}
+        \vspace{0.3cm}
         
         \textbf{Repositorio GitHub (Frontend):} \\
         \url{https://github.com/rogerinfas/EventTix-Flutter} \\
-        \vspace{0.15cm}
+        \vspace{0.2cm}
         
         \textbf{API VPS Backend:} \\
         \texttt{http://77.42.83.15:9988} \\
-        \vspace{0.15cm}
+        \vspace{0.2cm}
         
         \textbf{Video de Presentación:} \\
         \url{https://drive.google.com/drive/folders/181GyMDT102DKJVuiSToELLibBGBIhKdH?usp=sharing} \\
