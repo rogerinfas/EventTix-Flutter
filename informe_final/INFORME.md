@@ -86,7 +86,7 @@ El video demostrativo abarca:
 2. **Arquitectura:** Estructura MVVM en Flutter y Flask.
 3. **Flujo Funcional en Tiempo Real:** Registro de usuario -> Compra de entrada -> Inspección del boleto QR -> Transferencia de boleto -> Actualización automática de la Billetera.
 
-* **Enlace al Video:** `[Colocar enlace al video de Youtube / Drive aquí]`
+* **Enlace al Video:** [Google Drive - Exposición y Demo EventTix](https://drive.google.com/drive/folders/181GyMDT102DKJVuiSToELLibBGBIhKdH?usp=sharing)
 
 ---
 

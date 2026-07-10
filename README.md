@@ -81,3 +81,11 @@ lib/
     ```bash
     flutter run
     ```
+
+---
+
+## 🎥 Video de Presentación (Exposición)
+
+Puedes visualizar la demostración del proyecto y la explicación de la arquitectura en el siguiente enlace:
+*   [Video de Presentación del Proyecto Final](https://drive.google.com/drive/folders/181GyMDT102DKJVuiSToELLibBGBIhKdH?usp=sharing)
+
