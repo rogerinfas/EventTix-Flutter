@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'views/pantalla_eventos.dart';
 import 'views/pantalla_billetera.dart';
 import 'views/pantalla_perfil.dart';
+import 'views/pantalla_auth.dart';
+import 'services/api_service.dart';
 
 void main() {
   runApp(const EventTixApp());
@@ -25,6 +27,8 @@ class EventTixApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final apiService = ApiService();
+
     return MaterialApp(
       title: 'EventTix',
       debugShowCheckedModeBanner: false,
@@ -37,7 +41,29 @@ class EventTixApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: _cFondo,
       ),
-      home: const _PantallaBase(),
+      // Definición de rutas nombradas para transiciones limpias
+      routes: {
+        '/auth': (context) => const PantallaAuth(),
+        '/home': (context) => const _PantallaBase(),
+      },
+      // Determina dinámicamente si redirige al Login o a la vista principal
+      home: FutureBuilder<String?>(
+        future: apiService.obtenerToken(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              backgroundColor: _cFondo,
+              body: Center(
+                child: CircularProgressIndicator(color: _cPrimario),
+              ),
+            );
+          }
+          if (snapshot.hasData && snapshot.data != null && snapshot.data!.isNotEmpty) {
+            return const _PantallaBase();
+          }
+          return const PantallaAuth();
+        },
+      ),
     );
   }
 }
@@ -56,16 +82,33 @@ class _PantallaBase extends StatefulWidget {
 class _PantallaBaseState extends State<_PantallaBase> {
   int _tab = 0;
 
-  static const _tabs = <Widget>[
-    PantallaEventos(),
-    PantallaBilletera(),
-    PantallaPerfil(),
-  ];
+  /// Devuelve la pantalla activa según el índice seleccionado.
+  /// Al usar switch en lugar de IndexedStack, cada pestaña se reconstruye
+  /// al ser seleccionada, garantizando datos frescos desde la API.
+  Widget _buildBody() {
+    switch (_tab) {
+      case 0:
+        return const PantallaEventos();
+      case 1:
+        return const PantallaBilletera();
+      case 2:
+        return const PantallaPerfil();
+      default:
+        return const PantallaEventos();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _tab, children: _tabs),
+      // AnimatedSwitcher proporciona una transición suave entre pestañas.
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 200),
+        child: KeyedSubtree(
+          key: ValueKey<int>(_tab),
+          child: _buildBody(),
+        ),
+      ),
       bottomNavigationBar: NavigationBar(
         backgroundColor: _cSuperficie,
         indicatorColor: _cPrimario.withOpacity(0.25),
