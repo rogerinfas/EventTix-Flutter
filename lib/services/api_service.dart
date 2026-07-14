@@ -8,8 +8,8 @@ import '../models/boleto.dart';
 /// Gestiona la persistencia del token JWT y el consumo de endpoints protegidos y públicos.
 class ApiService {
   static const String baseUrl = 'http://77.42.83.15:9988/api';
-  static const String _keyToken = 'jwt_token';
-  static const String _keyNombre = 'usuario_nombre';
+  static const String _keyToken = 'ufi2fukfujkfakjfa-fawgha-gwah-adadawgjuyjuyj';
+  static const String _keyNombre = 'roger123';
 
   /// Guarda el token JWT y el nombre de usuario localmente.
   Future<void> guardarSesion(String token, String nombre) async {
