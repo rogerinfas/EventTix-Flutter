@@ -5,10 +5,10 @@
 \usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=3cm]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
-\usepackage{booktabs}
 \usepackage{array}
 \usepackage{parskip}
 \usepackage{graphicx}
+\usepackage{amssymb}
 \usepackage{hyperref}
 
 \hypersetup{
@@ -43,7 +43,7 @@
     de Entradas Inteligentes (QR)\\}
 
     \vspace{0.4cm}
-    {\normalsize\itshape Avance de Proyecto -- Fase 1 (Maqueta UI)}\\
+    {\normalsize\itshape Proyecto Final -- Sistema Completo (Frontend + Backend)}\\
 
     \rule{\linewidth}{1.5pt}
     \vspace{1.5cm}
@@ -58,7 +58,8 @@
     \end{tabular}
 
     \vfill
-    {\small Repositorio: \url{https://github.com/rogerinfas/EventTix-Flutter}}
+    {\small Repositorio Frontend: \url{https://github.com/rogerinfas/EventTix-Flutter}} \\[0.1cm]
+    {\small Repositorio Backend: \url{https://github.com/rogerinfas/eventtix-api}}
 \end{titlepage}
 
 % ─────────────────────────────────────────────────────────────────
@@ -134,35 +135,36 @@ y fecha.
 \section{Arquitectura y Tecnologías}
 
 \begin{center}
-\begin{tabular}{>{\bfseries}l l l}
-    \toprule
+\begin{tabular}{|>{\bfseries}l | l | l|}
+    \hline
     Componente        & Tecnología              & Propósito \\
-    \midrule
+    \hline
     Frontend Móvil    & Flutter 3.x (Dart)      & UI Android / iOS \\
     Generación de QR  & qr\_flutter \^{}4.1.0   & Códigos QR en pantalla \\
     Navegación        & NavigationBar           & Rutas entre pantallas \\
-    Estado (Fase 1)   & MVVM (Model-View-ViewModel) & Datos mock estructurados \\
-    Backend (Fase 2)  & REST API (por definir)  & Gestión real de boletos \\
-    \bottomrule
+    Arquitectura      & MVVM (Model-View-ViewModel) & Estructuración de lógica y UI \\
+    Backend           & REST API (Flask + SQLite)  & Servidor VPS con persistencia real \\
+    \hline
 \end{tabular}
 \end{center}
 
 % ─────────────────────────────────────────────────────────────────
 \section{Estado Actual del Avance}
 
-En esta primera fase se entrega la maqueta de la interfaz de usuario
-con arquitectura \textbf{MVVM} y datos estáticos. Las tres pantallas
-son navegables de manera limpia y el código QR se genera de forma real.
+En esta fase final se entrega el sistema completo integrado. La aplicación móvil en
+Flutter consume directamente la API REST de EventTix en producción. Las operaciones de
+autenticación, visualización, compra, cancelación y transferencia de boletos P2P son
+100\% funcionales y seguras.
 
 \begin{itemize}[noitemsep]
     \item[$\checkmark$] Arquitectura base estructurada en \textbf{MVVM}
-    \item[$\checkmark$] Pantalla 1: Cartelera de Eventos (datos mock)
-    \item[$\checkmark$] Pantalla 2: Billetera de Entradas (datos mock)
+    \item[$\checkmark$] Pantalla 1: Cartelera de Eventos (Consumo dinámico de API REST)
+    \item[$\checkmark$] Pantalla 2: Billetera de Entradas (Consumo dinámico de API REST)
     \item[$\checkmark$] Pantalla 3: Detalle con Código QR funcional
     \item[$\checkmark$] Navegación con \texttt{NavigationBar}
-    \item[$\circ$] Transferir boleto (Fase 2 -- backend)
-    \item[$\circ$] Cancelar boleto (Fase 2 -- backend)
-    \item[$\circ$] Autenticación de usuario (Fase 2 -- backend)
+    \item[$\checkmark$] Transferir boleto (Funcional e integrado con backend)
+    \item[$\checkmark$] Cancelar boleto (Funcional e integrado con backend)
+    \item[$\checkmark$] Autenticación de usuario (JWT persistente e integrado con backend)
 \end{itemize}
 
 \end{document}

@@ -8,7 +8,8 @@
 * **Proyecto:** EventTix (Aplicación Móvil + API Backend)
 * **Curso:** Desarrollo de Aplicaciones para Dispositivos Móviles
 * **Fecha:** Julio, 2026
-* **Repositorio GitHub:** [EventTix-Flutter (Frontend)](https://github.com/rogerinfas/EventTix-Flutter) & [EventTix-API (Backend)](http://77.42.83.15:9988)
+* **Repositorios GitHub:** [EventTix-Flutter (Frontend)](https://github.com/rogerinfas/EventTix-Flutter) y [EventTix-API (Backend)](https://github.com/rogerinfas/eventtix-api)
+* **Despliegue Backend (VPS API):** [EventTix VPS API](http://77.42.83.15:9988)
 
 ---
 
